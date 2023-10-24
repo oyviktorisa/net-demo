@@ -1,33 +1,28 @@
-# Important
+# Disclaimer
 
-Issues of this repository are tracked on https://github.com/aspnetboilerplate/aspnetboilerplate. Please create your issues on https://github.com/aspnetboilerplate/aspnetboilerplate/issues.
+This project is based on [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents).
 
-# Introduction
+# Requirements
+- NET Core 3.1
+- NodeJS v16
+- MsSQL
 
-This is a template to create **ASP.NET Core MVC / Angular** based startup projects for [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents). It has 2 different versions:
+# Setup
+This guide is mainly taken from [here](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular).
 
-1. [ASP.NET Core MVC & jQuery](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core) (server rendered multi-page application).
-2. [ASP.NET Core & Angular](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular) (single page application).
- 
-User Interface is based on [AdminLTE theme](https://github.com/ColorlibHQ/AdminLTE).
- 
-# Download
+How to run backend:
+- Open your solution in Visual Studio 2017 v15.3.5+ and build the solution.
+- Select the 'Web.Host' project as the startup project.
+- Check the connection string in the appsettings.json file of the Web.Host project, change it if you need to.
+- Open the Package Manager Console and run an Update-Database command to create your database (ensure that the Default project is selected as .EntityFrameworkCore in the Package Manager Console window).
+- Run the application. It will show swagger-ui if it is successful.
 
-Create & download your project from https://aspnetboilerplate.com/Templates
+How to run frontend:
+- Open a command prompt, navigate to the angular folder which contains the *.sln file and run 'npm install'
+- After finished, run 'npm start'
+- The web app is accessible from localhost:4200
+- The weather check page URL is localhost:4200/app/weather
 
-# Screenshots
-
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
-
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
-
-#### Login Page
-
-![](_screenshots/module-zero-core-template-ui-login.png)
-
-# Documentation
 
 * [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
 * [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
