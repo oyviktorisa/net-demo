@@ -23,7 +23,13 @@ How to run frontend:
 - The web app is accessible from localhost:4200
 
 # Demo
-Added a weather checker feature to the web app.
-Add WeatherService including the unit tests in the backend. The endpoints are /WeatherService/GetLocation and /WeatherService/GetCurrentWeather. This service doesn't need authorization. The location data is still hardcoded. For the weather information it uses Weather API from OpenWeatherMap.
-Add Weather Checker page in the frontend. The weather check page URL is localhost:4200/app/weather. This page doesn't need authorization.
+Added a weather checker feature to the web app:
+
+- Add WeatherService including the unit tests in the backend.
+
+The endpoints are /WeatherService/GetLocation and /WeatherService/GetCurrentWeather. This service doesn't need authorization. The location data is still hardcoded. For the weather information it uses Weather API from OpenWeatherMap.
+
+- Add Weather Checker page in the frontend. 
+
+The weather check page URL is localhost:4200/app/weather. This page doesn't need authorization.
 
