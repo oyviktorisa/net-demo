@@ -3,6 +3,7 @@ using Abp.Reflection.Extensions;
 using Abp.Timing;
 using Abp.Zero;
 using Abp.Zero.Configuration;
+using techtest.project.Authentication;
 using techtest.project.Authorization.Roles;
 using techtest.project.Authorization.Users;
 using techtest.project.Configuration;
@@ -33,6 +34,8 @@ namespace techtest.project
             AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
 
             Configuration.Settings.Providers.Add<AppSettingProvider>();
+
+            Configuration.Modules.Zero().UserManagement.ExternalAuthenticationSources.Add<CustomAuthentication>();
         }
 
         public override void Initialize()

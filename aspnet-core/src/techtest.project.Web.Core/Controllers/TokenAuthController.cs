@@ -17,6 +17,12 @@ using techtest.project.Authorization;
 using techtest.project.Authorization.Users;
 using techtest.project.Models.TokenAuth;
 using techtest.project.MultiTenancy;
+using System.Net.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using Abp.Domain.Entities;
+using Abp;
 
 namespace techtest.project.Controllers
 {
@@ -30,6 +36,8 @@ namespace techtest.project.Controllers
         private readonly IExternalAuthConfiguration _externalAuthConfiguration;
         private readonly IExternalAuthManager _externalAuthManager;
         private readonly UserRegistrationManager _userRegistrationManager;
+        private readonly IConfiguration _appConfiguration;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public TokenAuthController(
             LogInManager logInManager,
@@ -38,7 +46,9 @@ namespace techtest.project.Controllers
             TokenAuthConfiguration configuration,
             IExternalAuthConfiguration externalAuthConfiguration,
             IExternalAuthManager externalAuthManager,
-            UserRegistrationManager userRegistrationManager)
+            UserRegistrationManager userRegistrationManager,
+            IConfiguration appConfiguration, 
+            IHttpClientFactory httpClientFactory)
         {
             _logInManager = logInManager;
             _tenantCache = tenantCache;
@@ -47,6 +57,8 @@ namespace techtest.project.Controllers
             _externalAuthConfiguration = externalAuthConfiguration;
             _externalAuthManager = externalAuthManager;
             _userRegistrationManager = userRegistrationManager;
+            _appConfiguration = appConfiguration;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpPost]
@@ -57,6 +69,34 @@ namespace techtest.project.Controllers
                 model.Password,
                 GetTenancyNameOrNull()
             );
+
+            //get external token
+            string token = null;
+
+            string api = _appConfiguration.GetSection("AuthAPI").Value;
+
+            try
+            {
+                HttpClient httpClient = _httpClientFactory.CreateClient();
+
+                JObject obj = new JObject();
+                obj.Add("email", model.UserNameOrEmailAddress);
+                obj.Add("password", model.Password);
+                HttpContent content = new StringContent(obj.ToString(), Encoding.UTF8, "application/json");
+                var response = await httpClient.PostAsync(api, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = JObject.Parse(await response.Content.ReadAsStringAsync());
+                    token = json.SelectToken("token").ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AbpException(ex.Message);
+            }
+
+            loginResult.Identity.AddClaim(new Claim("External_Token", token));
 
             var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
 
