@@ -6,6 +6,7 @@ This project is based on [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pag
 - NET Core 3.1
 - NodeJS v16
 - MsSQL
+- OpenWeatherMap API key
 
 # Setup
 This guide is mainly taken from [here](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular).
@@ -15,6 +16,7 @@ How to run backend:
 - Select the 'Web.Host' project as the startup project.
 - Check the connection string in the appsettings.json file of the Web.Host project, change it if you need to.
 - Open the Package Manager Console and run an Update-Database command to create your database (ensure that the Default project is selected as .EntityFrameworkCore in the Package Manager Console window).
+- Update APIKey value in appsettings.json
 - Run the application. It will show swagger-ui if it is successful.
 
 How to run frontend:
